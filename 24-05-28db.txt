@@ -1,0 +1,500 @@
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Server version:               8.0.33 - MySQL Community Server - GPL
+-- Server OS:                    Win64
+-- HeidiSQL Version:             12.5.0.6677
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+-- Dumping database structure for phoneshop1
+CREATE DATABASE IF NOT EXISTS `phoneshop1` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `phoneshop1`;
+
+-- Dumping structure for table phoneshop1.brand
+CREATE TABLE IF NOT EXISTS `brand` (
+  `brand_id` int NOT NULL AUTO_INCREMENT,
+  `brand_name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`brand_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb3;
+
+-- Dumping data for table phoneshop1.brand: ~13 rows (approximately)
+INSERT INTO `brand` (`brand_id`, `brand_name`) VALUES
+	(1, 'Apple'),
+	(2, 'Samsung'),
+	(3, 'Sony'),
+	(4, 'Xiaomi'),
+	(5, 'Nokia'),
+	(6, 'One Plus'),
+	(7, 'Oppo'),
+	(8, 'Microsoft'),
+	(9, 'CAT'),
+	(10, 'Huawei'),
+	(11, 'Essager'),
+	(12, 'Other'),
+	(13, 'Lenovo');
+
+-- Dumping structure for table phoneshop1.brand_has_category
+CREATE TABLE IF NOT EXISTS `brand_has_category` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `brand_brand_id` int NOT NULL,
+  `category_cat_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_brand_has_category_category1_idx` (`category_cat_id`),
+  KEY `fk_brand_has_category_brand1_idx` (`brand_brand_id`),
+  CONSTRAINT `fk_brand_has_category_brand1` FOREIGN KEY (`brand_brand_id`) REFERENCES `brand` (`brand_id`),
+  CONSTRAINT `fk_brand_has_category_category1` FOREIGN KEY (`category_cat_id`) REFERENCES `category` (`cat_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb3;
+
+-- Dumping data for table phoneshop1.brand_has_category: ~17 rows (approximately)
+INSERT INTO `brand_has_category` (`id`, `brand_brand_id`, `category_cat_id`) VALUES
+	(1, 1, 1),
+	(2, 1, 2),
+	(3, 9, 1),
+	(4, 8, 1),
+	(5, 5, 1),
+	(6, 6, 1),
+	(7, 7, 1),
+	(8, 4, 1),
+	(9, 2, 1),
+	(10, 3, 1),
+	(11, 10, 1),
+	(12, 11, 2),
+	(13, 12, 2),
+	(14, 12, 1),
+	(15, 2, 2),
+	(16, 4, 2),
+	(17, 13, 2);
+
+-- Dumping structure for table phoneshop1.cart
+CREATE TABLE IF NOT EXISTS `cart` (
+  `cart_id` int NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `users_email` varchar(100) NOT NULL,
+  `qty` int DEFAULT NULL,
+  PRIMARY KEY (`cart_id`),
+  KEY `fk_cart_product1_idx` (`product_id`),
+  KEY `fk_cart_users1_idx` (`users_email`),
+  CONSTRAINT `fk_cart_product1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
+  CONSTRAINT `fk_cart_users1` FOREIGN KEY (`users_email`) REFERENCES `users` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb3;
+
+-- Dumping data for table phoneshop1.cart: ~0 rows (approximately)
+
+-- Dumping structure for table phoneshop1.category
+CREATE TABLE IF NOT EXISTS `category` (
+  `cat_id` int NOT NULL AUTO_INCREMENT,
+  `cat_name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`cat_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+
+-- Dumping data for table phoneshop1.category: ~2 rows (approximately)
+INSERT INTO `category` (`cat_id`, `cat_name`) VALUES
+	(1, 'Phones'),
+	(2, 'Accessories');
+
+-- Dumping structure for table phoneshop1.city
+CREATE TABLE IF NOT EXISTS `city` (
+  `city_id` int NOT NULL AUTO_INCREMENT,
+  `city_name` varchar(45) DEFAULT NULL,
+  `district_district_id` int NOT NULL,
+  PRIMARY KEY (`city_id`),
+  KEY `fk_city_district1_idx` (`district_district_id`),
+  CONSTRAINT `fk_city_district1` FOREIGN KEY (`district_district_id`) REFERENCES `district` (`district_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
+
+-- Dumping data for table phoneshop1.city: ~7 rows (approximately)
+INSERT INTO `city` (`city_id`, `city_name`, `district_district_id`) VALUES
+	(1, 'Colombo', 5),
+	(2, 'Kandy', 11),
+	(3, 'Matale', 16),
+	(4, 'Dambulla', 16),
+	(5, 'Naula', 16),
+	(6, 'Kadugannawa', 11),
+	(7, 'Sigiriya', 16);
+
+-- Dumping structure for table phoneshop1.color
+CREATE TABLE IF NOT EXISTS `color` (
+  `clr_id` int NOT NULL AUTO_INCREMENT,
+  `clr_name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`clr_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3;
+
+-- Dumping data for table phoneshop1.color: ~15 rows (approximately)
+INSERT INTO `color` (`clr_id`, `clr_name`) VALUES
+	(1, 'Blue'),
+	(2, 'Black'),
+	(3, 'Red'),
+	(4, 'Navy Blue'),
+	(5, 'Silver'),
+	(6, 'Gold'),
+	(7, 'Purple'),
+	(8, 'Gray'),
+	(9, 'Sky Blue'),
+	(10, 'Rose Gold'),
+	(11, 'Midnight Blue'),
+	(12, 'Matte Black'),
+	(13, 'Jet Black'),
+	(14, 'Mate Gray'),
+	(15, 'Mint Green');
+
+-- Dumping structure for table phoneshop1.condition
+CREATE TABLE IF NOT EXISTS `condition` (
+  `condition_id` int NOT NULL AUTO_INCREMENT,
+  `condition_name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`condition_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+
+-- Dumping data for table phoneshop1.condition: ~3 rows (approximately)
+INSERT INTO `condition` (`condition_id`, `condition_name`) VALUES
+	(1, 'Brand New'),
+	(2, 'Used'),
+	(3, 'Re-Condition');
+
+-- Dumping structure for table phoneshop1.district
+CREATE TABLE IF NOT EXISTS `district` (
+  `district_id` int NOT NULL AUTO_INCREMENT,
+  `district_name` varchar(45) DEFAULT NULL,
+  `province_province_id` int NOT NULL,
+  PRIMARY KEY (`district_id`),
+  KEY `fk_district_province1_idx` (`province_province_id`),
+  CONSTRAINT `fk_district_province1` FOREIGN KEY (`province_province_id`) REFERENCES `province` (`province_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb3;
+
+-- Dumping data for table phoneshop1.district: ~25 rows (approximately)
+INSERT INTO `district` (`district_id`, `district_name`, `province_province_id`) VALUES
+	(1, 'Ampara', 5),
+	(2, 'Anuradhapura', 8),
+	(3, 'Badulla', 6),
+	(4, 'Batticaloa', 5),
+	(5, 'Colombo', 2),
+	(6, 'Galle', 1),
+	(7, 'Gampaha', 2),
+	(8, 'Hambantota', 1),
+	(9, 'Jaffna', 9),
+	(10, 'Kalutara', 2),
+	(11, 'Kandy', 3),
+	(12, 'Kegalle', 4),
+	(13, 'Kilinochchi', 9),
+	(14, 'Kurunagala', 7),
+	(15, 'Mannar', 9),
+	(16, 'Matale', 3),
+	(17, 'Matara', 1),
+	(18, 'Moneragala', 6),
+	(19, 'Mullativu', 9),
+	(20, 'Nuwara Eliya', 3),
+	(21, 'Polonnaruwa', 8),
+	(22, 'Puttalam', 7),
+	(23, 'Ratnapura', 4),
+	(24, 'Trincomalee', 5),
+	(25, 'Vavuniya', 9);
+
+-- Dumping structure for table phoneshop1.gender
+CREATE TABLE IF NOT EXISTS `gender` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `gender_name` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+
+-- Dumping data for table phoneshop1.gender: ~2 rows (approximately)
+INSERT INTO `gender` (`id`, `gender_name`) VALUES
+	(1, 'Male'),
+	(2, 'Female');
+
+-- Dumping structure for table phoneshop1.model
+CREATE TABLE IF NOT EXISTS `model` (
+  `model_id` int NOT NULL AUTO_INCREMENT,
+  `model_name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`model_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb3;
+
+-- Dumping data for table phoneshop1.model: ~21 rows (approximately)
+INSERT INTO `model` (`model_id`, `model_name`) VALUES
+	(1, 'Apple Iphone X'),
+	(2, 'Sony Xperia 1'),
+	(3, 'Sony Xperia 5'),
+	(4, 'Sony Xperia 10'),
+	(5, 'Apple Iphone 11'),
+	(6, 'Apple Iphone 12'),
+	(7, 'Apple Iphone 13'),
+	(8, 'Apple Iphone 14'),
+	(9, 'Samsung Galaxy'),
+	(10, 'Samsung Note'),
+	(11, 'Redmi Note'),
+	(12, 'Huawei Mate'),
+	(13, 'Type C to C cable'),
+	(14, 'Iphone 14 Back Cover'),
+	(15, '45W Charger'),
+	(16, '10000mAh Power Bank'),
+	(17, '20000mAh Power Bank'),
+	(18, 'HUAWEI MatePad'),
+	(19, 'Wireless Earphones'),
+	(20, 'wired Earphones'),
+	(21, 'Airpods');
+
+-- Dumping structure for table phoneshop1.model_has_brand
+CREATE TABLE IF NOT EXISTS `model_has_brand` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `model_model_id` int NOT NULL,
+  `brand_brand_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_model_has_brand_brand1_idx` (`brand_brand_id`),
+  KEY `fk_model_has_brand_model1_idx` (`model_model_id`),
+  CONSTRAINT `fk_model_has_brand_brand1` FOREIGN KEY (`brand_brand_id`) REFERENCES `brand` (`brand_id`),
+  CONSTRAINT `fk_model_has_brand_model1` FOREIGN KEY (`model_model_id`) REFERENCES `model` (`model_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb3;
+
+-- Dumping data for table phoneshop1.model_has_brand: ~13 rows (approximately)
+INSERT INTO `model_has_brand` (`id`, `model_model_id`, `brand_brand_id`) VALUES
+	(1, 1, 1),
+	(2, 3, 3),
+	(3, 9, 2),
+	(4, 6, 1),
+	(5, 12, 10),
+	(6, 13, 11),
+	(7, 14, 12),
+	(8, 15, 2),
+	(9, 16, 4),
+	(10, 17, 12),
+	(11, 18, 10),
+	(12, 19, 1),
+	(13, 19, 13);
+
+-- Dumping structure for table phoneshop1.product
+CREATE TABLE IF NOT EXISTS `product` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `price` double DEFAULT NULL,
+  `qty` int DEFAULT NULL,
+  `title` varchar(100) DEFAULT NULL,
+  `description` text,
+  `datetime_added` datetime DEFAULT NULL,
+  `delivery_fee_colombo` double DEFAULT NULL,
+  `dilivery_fee_other` double DEFAULT NULL,
+  `model_has_brand_id` int NOT NULL,
+  `color_clr_id` int NOT NULL,
+  `status_status_id` int NOT NULL,
+  `condition_condition_id` int NOT NULL,
+  `users_email` varchar(100) NOT NULL,
+  `sub_category_subcat_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_product_model_has_brand1_idx` (`model_has_brand_id`),
+  KEY `fk_product_users1_idx` (`users_email`),
+  KEY `fk_product_color1_idx` (`color_clr_id`),
+  KEY `fk_product_status1_idx` (`status_status_id`),
+  KEY `fk_product_condition1_idx` (`condition_condition_id`),
+  KEY `fk_product_sub_category1_idx` (`sub_category_subcat_id`),
+  CONSTRAINT `fk_product_color1` FOREIGN KEY (`color_clr_id`) REFERENCES `color` (`clr_id`),
+  CONSTRAINT `fk_product_condition1` FOREIGN KEY (`condition_condition_id`) REFERENCES `condition` (`condition_id`),
+  CONSTRAINT `fk_product_model_has_brand1` FOREIGN KEY (`model_has_brand_id`) REFERENCES `model_has_brand` (`id`),
+  CONSTRAINT `fk_product_status1` FOREIGN KEY (`status_status_id`) REFERENCES `status` (`status_id`),
+  CONSTRAINT `fk_product_sub_category1` FOREIGN KEY (`sub_category_subcat_id`) REFERENCES `sub_category` (`subcat_id`),
+  CONSTRAINT `fk_product_users1` FOREIGN KEY (`users_email`) REFERENCES `users` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3;
+
+-- Dumping data for table phoneshop1.product: ~13 rows (approximately)
+INSERT INTO `product` (`id`, `price`, `qty`, `title`, `description`, `datetime_added`, `delivery_fee_colombo`, `dilivery_fee_other`, `model_has_brand_id`, `color_clr_id`, `status_status_id`, `condition_condition_id`, `users_email`, `sub_category_subcat_id`) VALUES
+	(1, 110000, 5, 'Sony Xperia 5 III', 'Xperia 5 III', '2023-09-21 19:24:15', 500, 600, 2, 2, 1, 1, 'eshangunsekara@gmail.com', 1),
+	(2, 80000, 10, 'Apple Iphone X', 'Iphone x', '2023-09-21 19:25:36', 500, 600, 1, 4, 1, 2, 'eshangunsekara@gmail.com', 1),
+	(3, 80000, 7, 'Samsung Galaxy S10', 'Samsung', '2023-09-22 05:55:58', 500, 600, 3, 4, 1, 1, 'eshangunsekara@gmail.com', 1),
+	(4, 150000, 9, 'iPhone 12', 'Iphone 12', '2023-09-22 05:57:30', 500, 600, 4, 3, 1, 2, 'eshangunsekara@gmail.com', 1),
+	(5, 50000, 2, 'Huawei Mate 20 Lite', 'Mate 20', '2023-09-22 06:06:46', 500, 600, 5, 4, 1, 1, 'eshangunsekara@gmail.com', 1),
+	(6, 350, 25, 'Essager Type C to Type C Cable', 'Essager Type C to Type C Cable 100W PD Fast Charging Charger USB C to USB C Display Cable For Xiaomi POCO F3 Realme Macbook iPad', '2023-10-10 15:08:30', 100, 150, 6, 2, 1, 1, 'eshangunsekara@gmail.com', 12),
+	(7, 1220, 9, 'Iphone 14 Pro Leather Back Cover', 'Genuine Italy Alcantara Leather Case with MagSafe for IPhone 14 Pro Max Magnetic Supercar Turn Fur Phone Back Cover', '2023-10-10 15:28:19', 200, 250, 7, 1, 1, 1, 'eshangunsekara@gmail.com', 9),
+	(8, 1250, 5, '45W Samsung High Speed Charger', 'Samsung S20 S22 Ultra 45W Original Super Fast Charger PD Quick Charge Adapter TypeC For Galaxy S20Plus Note 10+ A90 A80 Tab S7+', '2023-10-10 15:39:47', 200, 250, 8, 2, 1, 1, 'eshangunsekara@gmail.com', 11),
+	(9, 11000, 12, 'Xiaomi 10000mAh Power Bank', 'Original NEW Xiaomi Power Bank 10000mAh 22.5W Type C QC3.0 Two Way Fast Charging MAX Mini Portable Charger PD 20W for IPhone', '2023-10-10 15:54:49', 200, 250, 9, 4, 1, 1, 'eshangunsekara@gmail.com', 8),
+	(10, 15000, 4, '20000mAh Fast Charging Power Bank', 'DAIKALA Portable Ultra-thin Wireless Charger Power Bank 20000mAh 2.1A Fast Charging Power Bank For How To Wireless Phone', '2023-10-11 04:59:41', 200, 250, 10, 2, 1, 3, 'eshangunsekara@gmail.com', 8),
+	(14, 170000, 5, 'Huawei MatePad Pro 11', '11 inch 2022 WIFI Tablet PC HarmonyOS 3 Snapdragon 870 & Snapdragon 888 Octa Core 13MP Dual Cameras 8300mAh', '2023-10-11 07:28:42', 500, 600, 11, 14, 1, 1, 'eshangunsekara@gmail.com', 6),
+	(15, 18000, 7, 'Crave PD Power Bank 20000mAh', 'Crave PD Power Bank, Plus PRO Aluminum Portable Charger with 20000mAh [Quick Charge QC3.0 Dual Ports + Power Delivery PD Type C 45W] External Battery Pack for MacBook, iPhone, Samsung and More..', '2023-10-13 02:01:08', 200, 250, 10, 5, 1, 2, 'eshangunsekara@gmail.com', 8),
+	(16, 3500, 13, 'Lenovo LP5 Wireless Bluetooth Earbuds', 'Feature :\r\n1. Strong signal connection stability and low latency, universal for Apple and Android phones\r\n2. Equipped with double vibrating tympanic membrane, 13mm large moving coil speaker, clear treble and deep bass\r\n3. In-ear design, better noise reduction effect\r\n4. Support voice call, binaural high-definition call, with environmental noise reduction function and clear and no noise\r\n5. The headset is touch-operated, you can switch the upper and lower music, increase and decrease the volume, answer the call and wake up the voice assistant on the headset\r\n6. Adopting life-level waterproof design, no fear of splashing from sweat and rain, and accompany you when you travel outdoors at any time\r\n\r\nSpecification:\r\n[Model]:thinkplus LivePods LP5\r\n[Bluetooth Version]: V5.0\r\n[Working range]:>10M\r\n[Earphone battery]: 35mAh\r\n[Playing time] : about 3.5 hours ( earphone )\r\n[Charging time] : about 1hour ( earphone )\r\n[Input]: 35mA', '2023-10-13 04:16:40', 200, 250, 13, 5, 1, 1, 'eshangunsekara@gmail.com', 7);
+
+-- Dumping structure for table phoneshop1.product_img
+CREATE TABLE IF NOT EXISTS `product_img` (
+  `img_path` varchar(100) NOT NULL,
+  `product_id` int NOT NULL,
+  PRIMARY KEY (`img_path`),
+  KEY `fk_product_img_product1_idx` (`product_id`),
+  CONSTRAINT `fk_product_img_product1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+-- Dumping data for table phoneshop1.product_img: ~23 rows (approximately)
+INSERT INTO `product_img` (`img_path`, `product_id`) VALUES
+	('resources/products/xperia_5III.jpg', 1),
+	('resources/products/iPhone_X.jpg', 2),
+	('resources/products/Galaxy_S10.jpg', 3),
+	('resources/products/iPhone_12.jpg', 4),
+	('resources/products/Huawei_mate20.jpg', 5),
+	('resources/products/type_c_cable1.png', 6),
+	('resources/products/Iphone14_Case1.jpg', 7),
+	('resources/products/samsung_charger1.jpg', 8),
+	('resources/products/xiaomi_powerbank1.jpg', 9),
+	('resources//products//20000mAh Power Bank_0_6525de65673d1.jpeg', 10),
+	('resources//products//20000mAh Power Bank_1_6525de6567b16.jpeg', 10),
+	('resources//products//20000mAh Power Bank_2_6525de656822d.jpeg', 10),
+	('resources//products//Huawei MatePad Pro 11_0_65288f61cd734.jpeg', 14),
+	('resources//products//Huawei MatePad Pro 11_1_65288f61ce570.jpeg', 14),
+	('resources//products//Huawei MatePad Pro 11_2_65288f61cf2d1.jpeg', 14),
+	('resources//products//Huawei MatePad Pro 11_3_65288f61cfc44.jpeg', 14),
+	('resources//products//Crave PD Power Bank 20000mAh_0_6528578c631dd.jpeg', 15),
+	('resources//products//Crave PD Power Bank 20000mAh_1_6528578c63b72.jpeg', 15),
+	('resources//products//Crave PD Power Bank 20000mAh_2_6528578c64264.jpeg', 15),
+	('resources//products//Lenovo LP5 Wireless Bluetooth Earbuds_0_65287750edb20.jpeg', 16),
+	('resources//products//Lenovo LP5 Wireless Bluetooth Earbuds_1_65287750ee3c9.jpeg', 16),
+	('resources//products//Lenovo LP5 Wireless Bluetooth Earbuds_2_65287750eebb2.jpeg', 16),
+	('resources//products//Lenovo LP5 Wireless Bluetooth Earbuds_3_65287750ef364.jpeg', 16);
+
+-- Dumping structure for table phoneshop1.profile_img
+CREATE TABLE IF NOT EXISTS `profile_img` (
+  `path` varchar(100) NOT NULL,
+  `users_email` varchar(100) NOT NULL,
+  PRIMARY KEY (`path`),
+  KEY `fk_profile_img_users_idx` (`users_email`),
+  CONSTRAINT `fk_profile_img_users` FOREIGN KEY (`users_email`) REFERENCES `users` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+-- Dumping data for table phoneshop1.profile_img: ~0 rows (approximately)
+INSERT INTO `profile_img` (`path`, `users_email`) VALUES
+	('resources//profile_images//Bihangu_0701546227_665465da07812.jpeg', 'daytrone2002@gmail.com'),
+	('resources//profile_images//Gunasekara_0717964156_66557edac9e72.jpeg', 'eshangunasekara@outlook.com');
+
+-- Dumping structure for table phoneshop1.province
+CREATE TABLE IF NOT EXISTS `province` (
+  `province_id` int NOT NULL AUTO_INCREMENT,
+  `province_name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`province_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
+
+-- Dumping data for table phoneshop1.province: ~9 rows (approximately)
+INSERT INTO `province` (`province_id`, `province_name`) VALUES
+	(1, 'Southern Province'),
+	(2, 'Western Province'),
+	(3, 'Central Province'),
+	(4, 'Sabaragamuwa Province'),
+	(5, 'Eastern Province'),
+	(6, 'Uva Province'),
+	(7, 'North Western Province'),
+	(8, 'North Central Province'),
+	(9, 'Nothern Province');
+
+-- Dumping structure for table phoneshop1.status
+CREATE TABLE IF NOT EXISTS `status` (
+  `status_id` int NOT NULL AUTO_INCREMENT,
+  `status_name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`status_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+
+-- Dumping data for table phoneshop1.status: ~2 rows (approximately)
+INSERT INTO `status` (`status_id`, `status_name`) VALUES
+	(1, 'In Stock'),
+	(2, 'Out Of Stock');
+
+-- Dumping structure for table phoneshop1.sub_category
+CREATE TABLE IF NOT EXISTS `sub_category` (
+  `subcat_id` int NOT NULL AUTO_INCREMENT,
+  `subcat_name` varchar(45) DEFAULT NULL,
+  `category_cat_id` int NOT NULL,
+  PRIMARY KEY (`subcat_id`),
+  KEY `fk_sub_category_category1_idx` (`category_cat_id`),
+  CONSTRAINT `fk_sub_category_category1` FOREIGN KEY (`category_cat_id`) REFERENCES `category` (`cat_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3;
+
+-- Dumping data for table phoneshop1.sub_category: ~12 rows (approximately)
+INSERT INTO `sub_category` (`subcat_id`, `subcat_name`, `category_cat_id`) VALUES
+	(1, 'Smart Phones', 1),
+	(2, 'Buttoon Phones', 1),
+	(3, 'Windows Phones', 1),
+	(4, 'Rugged Phones', 1),
+	(5, 'Foldable Phones', 1),
+	(6, 'Tablets', 1),
+	(7, 'Earphones', 2),
+	(8, 'Power Banks', 2),
+	(9, 'Back Covers', 2),
+	(10, 'Tempered Glasses', 2),
+	(11, 'Chargers', 2),
+	(12, 'Cables', 2);
+
+-- Dumping structure for table phoneshop1.users
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int DEFAULT NULL,
+  `fname` varchar(45) DEFAULT NULL,
+  `lname` varchar(45) DEFAULT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(20) DEFAULT NULL,
+  `mobile` varchar(10) DEFAULT NULL,
+  `joined_date` datetime DEFAULT NULL,
+  `verification_code` varchar(20) DEFAULT NULL,
+  `status` int DEFAULT NULL,
+  `gender_id` int NOT NULL,
+  `user_type_id` int NOT NULL DEFAULT '2',
+  PRIMARY KEY (`email`),
+  KEY `fk_users_gender1_idx` (`gender_id`),
+  KEY `fk_users_user_type1_idx` (`user_type_id`),
+  CONSTRAINT `fk_users_gender1` FOREIGN KEY (`gender_id`) REFERENCES `gender` (`id`),
+  CONSTRAINT `fk_users_user_type1` FOREIGN KEY (`user_type_id`) REFERENCES `user_type` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+-- Dumping data for table phoneshop1.users: ~4 rows (approximately)
+INSERT INTO `users` (`id`, `fname`, `lname`, `email`, `password`, `mobile`, `joined_date`, `verification_code`, `status`, `gender_id`, `user_type_id`) VALUES
+	(1, 'Chamari', 'Bamunusinghe', 'akalankaeshan973@gmail.com', '654321', '0714410169', '2024-05-28 12:12:48', NULL, 1, 2, 2),
+	(2, 'Pabasara', 'Bihangu', 'daytrone2002@gmail.com', '123456', '0701546227', '2024-05-27 14:34:48', NULL, 1, 1, 2),
+	(3, 'Eshan', 'Gunasekara', 'eshangunasekara@outlook.com', '147852', '0717964156', '2024-05-28 12:15:45', NULL, 2, 1, 2),
+	(4, 'Eshan', 'Akalanka', 'eshangunsekara@gmail.com', '123456', '0778157227', '2024-05-27 14:28:31', NULL, 1, 1, 1);
+
+-- Dumping structure for table phoneshop1.users_has_address
+CREATE TABLE IF NOT EXISTS `users_has_address` (
+  `address_id` int NOT NULL AUTO_INCREMENT,
+  `line1` text,
+  `line2` text,
+  `postal_code` varchar(5) DEFAULT NULL,
+  `users_email` varchar(100) NOT NULL,
+  `city_city_id` int NOT NULL,
+  PRIMARY KEY (`address_id`),
+  KEY `fk_users_has_city_city1_idx` (`city_city_id`),
+  KEY `fk_users_has_city_users1_idx` (`users_email`),
+  CONSTRAINT `fk_users_has_city_city1` FOREIGN KEY (`city_city_id`) REFERENCES `city` (`city_id`),
+  CONSTRAINT `fk_users_has_city_users1` FOREIGN KEY (`users_email`) REFERENCES `users` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
+
+-- Dumping data for table phoneshop1.users_has_address: ~0 rows (approximately)
+INSERT INTO `users_has_address` (`address_id`, `line1`, `line2`, `postal_code`, `users_email`, `city_city_id`) VALUES
+	(4, 'murutholuwa', 'melpitiya', '21055', 'daytrone2002@gmail.com', 5),
+	(6, 'murutholuwa', 'melpitiya', '', 'eshangunasekara@outlook.com', 5);
+
+-- Dumping structure for table phoneshop1.user_type
+CREATE TABLE IF NOT EXISTS `user_type` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `type` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+
+-- Dumping data for table phoneshop1.user_type: ~2 rows (approximately)
+INSERT INTO `user_type` (`id`, `type`) VALUES
+	(1, 'admin'),
+	(2, 'user');
+
+-- Dumping structure for table phoneshop1.watchlist
+CREATE TABLE IF NOT EXISTS `watchlist` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `users_email` varchar(100) NOT NULL,
+  `product_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_watchlist_users1_idx` (`users_email`),
+  KEY `fk_watchlist_product1_idx` (`product_id`),
+  CONSTRAINT `fk_watchlist_product1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
+  CONSTRAINT `fk_watchlist_users1` FOREIGN KEY (`users_email`) REFERENCES `users` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3;
+
+-- Dumping data for table phoneshop1.watchlist: ~0 rows (approximately)
+
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;

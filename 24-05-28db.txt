@@ -442,10 +442,10 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 -- Dumping data for table phoneshop1.users: ~4 rows (approximately)
 INSERT INTO `users` (`id`, `fname`, `lname`, `email`, `password`, `mobile`, `joined_date`, `verification_code`, `status`, `gender_id`, `user_type_id`) VALUES
-	(1, 'Chamari', 'Bamunusinghe', 'akalankaeshan973@gmail.com', '654321', '0714410169', '2024-05-28 12:12:48', NULL, 1, 2, 2),
-	(2, 'Pabasara', 'Bihangu', 'daytrone2002@gmail.com', '123456', '0701546227', '2024-05-27 14:34:48', NULL, 1, 1, 2),
-	(3, 'Eshan', 'Gunasekara', 'eshangunasekara@outlook.com', '147852', '0717964156', '2024-05-28 12:15:45', NULL, 2, 1, 2),
-	(4, 'Eshan', 'Akalanka', 'eshangunsekara@gmail.com', '123456', '0778157227', '2024-05-27 14:28:31', NULL, 1, 1, 1);
+	(1, 'Chamari', 'Bamunusinghe', 'akalankaeshan973@gmail.com', '654321', '0714411234', '2024-05-28 12:12:48', NULL, 1, 2, 2),
+	(2, 'Pabasara', 'Bihangu', 'daytrone2002@gmail.com', '123456', '0701652365', '2024-05-27 14:34:48', NULL, 1, 1, 2),
+	(3, 'Eshan', 'Gunasekara', 'eshangunasekara@outlook.com', '147852', '0717969852', '2024-05-28 12:15:45', NULL, 2, 1, 2),
+	(4, 'Eshan', 'Akalanka', 'eshangunsekara@gmail.com', '123456', '0778621435', '2024-05-27 14:28:31', NULL, 1, 1, 1);
 
 -- Dumping structure for table phoneshop1.users_has_address
 CREATE TABLE IF NOT EXISTS `users_has_address` (
